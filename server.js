@@ -386,7 +386,7 @@ for (let num = LEFT_OFF; num < DO_NOT_CHANGE_FLAG; num++) {
   
   const globalFullDictByDate = {};
   
-  combineOutputDicts(..., globalReturnDict, globalFullDictByDate);
+  combineOutputDicts(globalReturnDict, globalFullDictByDate);
 const fs = require('fs').promises; // Using promises for cleaner async/await usage
 const path = require('path');
 
@@ -568,4 +568,4 @@ module.exports = {
   // In your main script
   const { returnDict, fullDictByDate } = require('./global_dicts');
   
-  combineOutputDicts(..., returnDict, fullDictByDate);
+  combineOutputDicts(returnDict, fullDictByDate);
