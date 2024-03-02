@@ -349,9 +349,9 @@ for (let num = LEFT_OFF; num < DO_NOT_CHANGE_FLAG; num++) {
   
       // Update global_return_dict using destructuring and defaults for license counts
       globalReturnDict.license = {
-        ...globalReturnDict.license,
-        ...curReturnDict.license.reduce((acc, [key, value]) => {
-          return { ...acc, [key]: (acc[key] || 0) + value };
+        globalReturnDict.license,
+        curReturnDict.license.reduce((acc, [key, value]) => {
+          return {acc, [key]: (acc[key] || 0) + value };
         }, {}),
       };
   
@@ -509,7 +509,7 @@ async function combineOutputDicts(path = './output_dicts/', savePath = './global
     const curReturnDict = JSON.parse(curReturnDictData);
     const curFullDictByDate = JSON.parse(curFullDictByDateData);
 
-    console.log(f'Combining and saving "return_dict" license values for folder {num}...');
+    console.log(`Combining and saving "return_dict" license values for folder ${num}...`);
 
     globalReturnDict.license = {
       ...globalReturnDict.license,
@@ -522,14 +522,14 @@ async function combineOutputDicts(path = './output_dicts/', savePath = './global
 
     await fs.writeFile(path.join(savePath, 'return_dict.json'), JSON.stringify(globalReturnDict, null, 2));
 
-    console.log(f'Combining and saving "full_dict_by_date" content items for folder {num}...');
+    console.log(`Combining and saving "full_dict_by_date" content items for folder ${num}...`);
 
     globalFullDictByDate = { ...globalFullDictByDate, ...curFullDictByDate };
 
     await fs.writeFile(path.join(savePath, 'full_dict_by_date.json'), JSON.stringify(globalFullDictByDate, null, 2));
   } catch (error) {
     if (error.code === 'ENOENT') {
-      console.log(f'No files in folder {num}, continuing to the next folder...');
+      console.log(`No files in folder ${num}, continuing to the next folder...`);
     } else {
       console.error('Error combining dicts:', error);
     }
