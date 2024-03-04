@@ -13,6 +13,8 @@ const fs = require('fs');
 const { DATE } = require('sequelize');
 const dateTxtContents = fs.readFileSync('./latest-date.txt', 'utf8');
 
+const db = require('./controller')
+
 // Obtain the logged date of the last preprint
 let DATE_EXISTS;
 try {
@@ -46,8 +48,7 @@ async function getPreprintsByDate() {
             
             for ( let row of data ) {
                 const { doi, title, authors, author_corresponding, author_corresponding_institution, date, version, type, license, category, jatsxml, abstract, published, server } = row;
-                await sequelize.query (`
-                INSERT INTO preprints (
+                await db.insertIntoTable(
                     doi, 
                     title, 
                     authors, 
@@ -62,29 +63,18 @@ async function getPreprintsByDate() {
                     abstract, 
                     published, 
                     server
-                )
-                VALUES (
-                    ${doi}, 
-                    ${title}, 
-                    ${authors}, 
-                    ${author_corresponding}, 
-                    ${author_corresponding_institution}, 
-                    ${date}, 
-                    ${version}, 
-                    ${type}, 
-                    ${license}, 
-                    ${category}, 
-                    ${jatsxml}, 
-                    ${abstract}, 
-                    ${published}, 
-                    ${server}
-                )`)
+                );
             }
         } 
         catch (error) {
             console.log(error);
+            console.log(`No data for ${year}-${month}-${date}`)
         }
         currentDate.setDate(currentDate.getDate() + 1);
     }
     fs.writeFileSync('latest-date.txt', currentDate);
 }
+
+// Need to check whether the table already exists, create a function somehow
+db.createTable();
+getPreprintsByDate();
