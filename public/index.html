@@ -2,20 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intro Page</title>
-    <link rel="stylesheet" href="/index.css">
+    <title>BioRxiv Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BioRhyme+Expanded&family=BioRhyme:wght@200..800&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Welcome to our website!</h1>
-    <nav>
-        <ul>
-            <li><a href="/public/preprints.html">Preprints</a></li>
-            <li><a href="/public/license.html">License</a></li>
-            <li><a href="/public/category.html">Category</a></li>
-            <li><a href="/public/year.html">Year</a></li>
-        </ul>
-    </nav>
+    <h1>BioRxiv Visualizer</h1>
+    <section id="selection-btns">
+        <button id="get-preprints-btn">Get Preprints</button>
+        <button id="get-license-btn">Pie Chart by License</button>
+        <button id="get-category-btn">Pie Chart by Category</button>
+        <button id="get-year-btn">Bar Chart by Year</button>
+    </section>
+    <div id="search-preprints" style="display: none;">
+        <div>
+            <input type="text" id="date-input" placeholder="Date (YYYY-mm-dd)">
+            <input type="text" id="interval-input" placeholder="Days Interval (Defaults 7)">
+        </div>
+        <div>
+            <input type="text" id="license-input" placeholder="License">
+            <input type="text" id="title-input" placeholder="Title">
+            <input type="text" id="category-input" placeholder="Category">
+        </div>
+        <div>
+            <input type="text" id="author-input" placeholder="Author">
+            <input type="text" id="institution-input" placeholder="Institution">
+            <input type="text" id="limit-input" placeholder="Limit Search To">
+        </div>
+        <button id="search-btn">Search</button>
+        <div id="preprints-table"></div>
+    </div>
+    <div id="license-chart">
+        <canvas id="license-pie-chart"></canvas>
+    </div>
+    <div id="category-chart">
+        <canvas id="category-pie-chart"></canvas>
+    </div>
+    <div id="year-chart">
+        <canvas id="year-bar-chart"></canvas>
+    </div>
     <script src="index.js"></script>
 </body>
-</html>
