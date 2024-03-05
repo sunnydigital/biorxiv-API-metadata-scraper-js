@@ -10,13 +10,13 @@ module.exports = {
         const { license, date, interval , title, category, author, institution, limit } = req.query;
         let query = `SELECT * FROM preprints WHERE 1=1`;
 
-        if (license) query += ` AND license = '${license}'`;
+        if (license) query += ` AND license LIKE '%${license}%'`;
         if (date && interval) query += ` AND date BETWEEN DATE_SUB('${date}', INTERVAL ${interval} DAY) AND DATE_ADD('${date}', INTERVAL ${interval} DAY)`;
         if (date && !interval) query += ` AND date BETWEEN DATE_SUB('${date}', INTERVAL 7 DAY) AND DATE_ADD('${date}', INTERVAL 7 DAY)`;
-        if (title) query += ` AND title = '${title}'`;
-        if (category) query += ` AND category = '${category}'`;
-        if (author) query += ` AND author = '${author}'`;
-        if (institution) query += ` AND institution = '${institution}'`;
+        if (title) query += ` AND title LIKE '%${title}%'`;
+        if (category) query += ` AND category LIKE '%${category}%'`;
+        if (author) query += ` AND authors LIKE '%${author}%'`;
+        if (institution) query += ` AND author_corresponding_institution LIKE '%${institution}%'`;
 
         query += ` LIMIT ${limit}`;
 
