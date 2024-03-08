@@ -7,16 +7,15 @@ const sequelize = new Sequelize(CONNECTION_STRING);
 
 module.exports = {
     getPreprints: (req, res) => {
-        const { license, date, interval, title, category, author, institution, limit } = req.query;
+        const { license, date, title, category, author, institution, limit } = req.query;
         let query = `SELECT * FROM preprints WHERE 1=1`;
         
-        if (license) query += ` AND license LIKE '%${license}%'`;
-        if (date && interval) query += ` AND date BETWEEN DATE_SUB('${date}', INTERVAL ${interval} DAY) AND DATE_ADD('${date}', INTERVAL ${interval} DAY)`;
-        if (date && !interval) query += ` AND date BETWEEN DATE_SUB('${date}', INTERVAL 7 DAY) AND DATE_ADD('${date}', INTERVAL 7 DAY)`;
-        if (title) query += ` AND title LIKE '%${title}%'`;
-        if (category) query += ` AND category LIKE '%${category}%'`;
-        if (author) query += ` AND authors LIKE '%${author}%'`;
-        if (institution) query += ` AND author_corresponding_institution LIKE '%${institution}%'`;
+        if (license) query += ` AND license ~* '%${license}%'`;
+        if (date) query += ` AND date = '${date}'`;
+        if (title) query += ` AND title ~* '%${title}%'`;
+        if (category) query += ` AND category ~* '%${category}%'`;
+        if (author) query += ` AND authors ~* '%${author}%'`;
+        if (institution) query += ` AND author_corresponding_institution ~* '%${institution}%'`;
 
         query += `${limit ? ` LIMIT ${limit}` : ` LIMIT 10`}`;
 

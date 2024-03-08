@@ -86,3 +86,40 @@ button:hover {
 #results {
     color: #ff0000;
 }
+
+#license-pie-chart {
+    width: 800px;
+    height: 800px;
+}
+
+#category-pie-chart {
+    width: 800px;
+    height: 800px;
+}
+
+#year-bar-chart {
+    width: 800px;
+    height: 800px;
+}
+
+#preprints-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+#preprints-table th, #preprints-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#preprints-table th {
+    background-color: #ff0000;
+    font-weight: bold;
+}
+
+#preprints-table th, #preprints-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
