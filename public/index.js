@@ -13,7 +13,7 @@ const viewGetPreprints = () => {
 
 const getPreprints = (license, date, interval, title, category, author, institution, limit) => {
     
-    axios.get(`/preprints?license=${license}&date=${date}&interval=${interval}&title=${title}&category=${category}&author=${author}&institution=${institution}&limit=${limit}`)    
+    axios.get(`http://localhost:4000/api/preprints?license=${license}&date=${date}&interval=${interval}&title=${title}&category=${category}&author=${author}&institution=${institution}&limit=${limit}`)    
     .then(res => {
         const preprints = res.data;
         const table = document.getElementById('preprints-table');
@@ -66,11 +66,11 @@ const getPreprintsLicensePieChart = () => {
     document.getElementById('category-pie-chart').style.display = 'none';
     document.getElementById('year-bar-chart').style.display = 'none';
 
-    axios.get('/license')
+    axios.get('http://localhost:4000/api/license')
     .then(res => {
         const data = res.data;
         const ctx = document.getElementById('license-pie-chart').getContext('2d');
-        
+
         const backgroundColors = Object.keys(data).map((_, i) => `hsla(${i / data.length * 360}, 100%, 75%, 0.5)`);
         const borderColors = Object.keys(data).map((_, i) => `hsla(${i / data.length * 360}, 100%, 75%, 0.5)`);
         
@@ -103,7 +103,7 @@ const getPreprintsCategoryPieChart = () => {
     document.getElementById('category-pie-chart').style.display = 'block';
     document.getElementById('year-bar-chart').style.display = 'none';
 
-    axios.get('/category')
+    axios.get('http://localhost:4000/api/category')
     .then(res => {
         const data = res.data;
         const ctx = document.getzElementById('category-pie-chart').getContext('2d');
@@ -140,7 +140,7 @@ const getPreprintsYearBarChart = () => {
     document.getElementById('category-pie-chart').style.display = 'none';
     document.getElementById('year-bar-chart').style.display = 'block';
 
-    axios.get('/year')
+    axios.get('http://localhost:4000/api/year')
     .then(res => {
         const data = res.data;
         const ctx = document.getElementById('year-bar-chart').getContext('2d');

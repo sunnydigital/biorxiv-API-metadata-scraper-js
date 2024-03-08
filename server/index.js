@@ -7,7 +7,9 @@ const { SERVER_PORT } = process.env;
 const { getPreprints, getPreprintsGroupByLicense, getPreprintsGroupByCategory, getPreprintsGroupByYear } = require('./controller');
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://127.0.0.1:3000'
+}));
 
 // This assumes that the databse is already set up and the tables are created
 app.get('/api/preprints', getPreprints);
