@@ -12,14 +12,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>BioRxiv Visualizer</h1>
+    <h1>
+        <a id="title">BioRxiv Visualizer</a>
+    </h1>
     <section id="selection-btns">
         <button id="get-preprints-btn">Get Preprints</button>
-        <button id="get-license-btn">Pie Chart by License</button>
-        <button id="get-category-btn">Pie Chart by Category</button>
-        <button id="get-year-btn">Bar Chart by Year</button>
+        <button id="get-license-btn">Preprints by License</button>
+        <button id="get-category-btn">Preprints by Category</button>
+        <button id="get-year-btn">Preprints by Year</button>
+        <button id="get-month-btn">Preprints by Month</button>
     </section>
-    <div id="search-preprints" style="display: none;">
+    <div>
+        <img src="/assets/BioRxiv_logo.png" id="biorxiv-logo">
+    </div>
+    <div id="search-preprints">
         <div>
             <input type="text" id="date-input" placeholder="Date (YYYY-mm-dd)">
         </div>
@@ -45,7 +51,10 @@
     <div id="year-chart">
         <canvas id="year-bar-chart"></canvas>
     </div>
-    <h5>BioRxiv Visualizer - Sunny Son - 2024</h5>
+    <div id="month-chart">
+        <canvas id="month-bar-chart"></canvas>
+    </div>
+    <h3>BioRxiv Visualizer - Sunny Son - 2024</h3>
     <script src="index.js"></script>
     <script src="../node_modules/axios/dist/axios.min.js"></script>
 </body>

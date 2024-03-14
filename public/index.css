@@ -123,3 +123,7 @@ button:hover {
     text-align: left;
     border: 1px solid #ddd;
 }
+
+#biorxiv-logo {
+    width: 400px
+}

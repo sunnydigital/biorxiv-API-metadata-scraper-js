@@ -91,6 +91,27 @@ module.exports = {
             res.status(500).send('Error getting preprints grouped by year');
         });
     },
+    getPreprintsGroupByMonth: (req, res) => {
+        sequelize.query(`
+            SELECT EXTRACT(MONTH FROM date) AS month, COUNT(*) as count
+            FROM preprints
+            GROUP BY EXTRACT(MONTH FROM date);
+        `)
+        .then(([results, metadata]) => {
+            console.log(results)
+
+            const countsByYear = results.reduce((obj, row) => {
+                obj[row.year] = row.count;
+                return obj;
+            }, {});
+
+            res.status(200).send(countsByYear);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send('Error getting preprints grouped by year');
+        });
+    },
     createTable: (req, res) => {
         sequelize.query(`
         DROP TABLE IF EXISTS preprints;

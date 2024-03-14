@@ -1,19 +1,26 @@
+const title = document.getElementById('title')
+
 const getPreprintsBtn = document.getElementById('get-preprints-btn');
 const getPreprintsLicensePieChartBtn = document.getElementById('get-license-btn');
 const getPreprintsCategoryPieChartBtn = document.getElementById('get-category-btn');
 const getPreprintsYearBarChartBtn = document.getElementById('get-year-btn');
+const getPreprintsMonthBarChartBtn = document.getElementById('get-month-btn');
 
 const viewGetPreprints = () => {
+    document.getElementById('biorxiv-logo').style.display = 'none';
+
     document.getElementById('search-preprints').style.display = 'block';
     document.getElementById('preprints-table').style.display = 'block';
     document.getElementById('license-pie-chart').style.display = 'none';
     document.getElementById('category-pie-chart').style.display = 'none';
     document.getElementById('year-bar-chart').style.display = 'none';
+    document.getElementById('month-bar-chart').style.display = 'none';
 };
 
 let licensePieChart;
 let categoryPieChart;
 let yearBarChart;
+let monthBarChart;
 
 const getPreprints = (license, date, title, category, author, institution, limit) => {
     axios.get(`http://localhost:4000/api/preprints?license=${license}&date=${date}&title=${title}&category=${category}&author=${author}&institution=${institution}&limit=${limit}`)
@@ -79,12 +86,14 @@ const getPreprints = (license, date, title, category, author, institution, limit
   };
 
 const getPreprintsLicensePieChart = () => {
+    document.getElementById('biorxiv-logo').style.display = 'none';
 
     document.getElementById('search-preprints').style.display = 'none';
     document.getElementById('preprints-table').style.display = 'none';
     document.getElementById('license-pie-chart').style.display = 'block';
     document.getElementById('category-pie-chart').style.display = 'none';
     document.getElementById('year-bar-chart').style.display = 'none';
+    document.getElementById('month-bar-chart').style.display = 'none';
 
     axios.get('http://localhost:4000/api/license')
     .then(res => {
@@ -120,12 +129,15 @@ const getPreprintsLicensePieChart = () => {
 };
 
 const getPreprintsCategoryPieChart = () => {
+    document.getElementById('biorxiv-logo').style.display = 'none';
+
     document.getElementById('search-preprints').style.display = 'none';
     document.getElementById('preprints-table').style.display = 'none';
     document.getElementById('license-pie-chart').style.display = 'none';
     document.getElementById('category-pie-chart').style.display = 'block';
     document.getElementById('year-bar-chart').style.display = 'none';
-  
+    document.getElementById('month-bar-chart').style.display = 'none';
+
     axios.get('http://localhost:4000/api/category')
       .then(res => {
         const data = res.data;
@@ -162,12 +174,15 @@ const getPreprintsCategoryPieChart = () => {
   };
 
 const getPreprintsYearBarChart = () => {
+    document.getElementById('biorxiv-logo').style.display = 'none';
+
     document.getElementById('search-preprints').style.display = 'none';
     document.getElementById('preprints-table').style.display = 'none';
     document.getElementById('license-pie-chart').style.display = 'none';
     document.getElementById('category-pie-chart').style.display = 'none';
     document.getElementById('year-bar-chart').style.display = 'block';
-  
+    document.getElementById('month-bar-chart').style.display = 'none';
+
     axios.get('http://localhost:4000/api/year')
       .then(res => {
         const data = res.data;
@@ -202,10 +217,73 @@ const getPreprintsYearBarChart = () => {
       .catch(error => console.log(error));
   };
 
+  const getPreprintsMonthBarChart = () => {
+    document.getElementById('biorxiv-logo').style.display = 'none';
+
+    document.getElementById('search-preprints').style.display = 'none';
+    document.getElementById('preprints-table').style.display = 'none';
+    document.getElementById('license-pie-chart').style.display = 'none';
+    document.getElementById('category-pie-chart').style.display = 'none';
+    document.getElementById('year-bar-chart').style.display = 'none';
+    document.getElementById('month-bar-chart').style.display = 'block';
+
+    axios.get('http://localhost:4000/api/month')
+      .then(res => {
+        const data = res.data;
+        const ctx = document.getElementById('month-bar-chart').getContext('2d');
+        const backgroundColors = Object.keys(data).map((_, i) => `hsla(${i / Object.keys(data).length * 360}, 100%, 75%, 1)`);
+        const borderColors = Object.keys(data).map((_, i) => `hsla(${i / Object.keys(data).length * 360}, 100%, 75%, 1)`);
+  
+        if(monthBarChart) {
+          monthBarChart.destroy();
+        }
+
+        monthBarChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: Object.keys(data),
+            datasets: [
+              {
+                label: 'Preprints by Month',
+                data: Object.values(data),
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false
+          }
+        });
+      })
+      .catch(error => console.log(error));
+  };
+
+document.getElementById('search-preprints').style.display = 'none';
+document.getElementById('preprints-table').style.display = 'none';
+document.getElementById('license-pie-chart').style.display = 'none';
+document.getElementById('category-pie-chart').style.display = 'none';
+document.getElementById('year-bar-chart').style.display = 'none';
+document.getElementById('month-bar-chart').style.display = 'none';
+
 getPreprintsBtn.addEventListener('click', viewGetPreprints);
 getPreprintsLicensePieChartBtn.addEventListener('click', getPreprintsLicensePieChart);
 getPreprintsCategoryPieChartBtn.addEventListener('click', getPreprintsCategoryPieChart);
 getPreprintsYearBarChartBtn.addEventListener('click', getPreprintsYearBarChart);
+getPreprintsMonthBarChartBtn.addEventListener('click', getPreprintsMonthBarChart);
+
+title.addEventListener('click', () => {
+  document.getElementById('biorxiv-logo').style.display = 'block';
+
+  document.getElementById('search-preprints').style.display = 'none';
+  document.getElementById('preprints-table').style.display = 'none';
+  document.getElementById('license-pie-chart').style.display = 'none';
+  document.getElementById('category-pie-chart').style.display = 'none';
+  document.getElementById('year-bar-chart').style.display = 'none';
+  document.getElementById('month-bar-chart').style.display = 'none';
+})
 
 document.getElementById('search-btn').addEventListener('click', () => {
     const license = document.getElementById('license-input').value;

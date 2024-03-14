@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const { SERVER_PORT } = process.env;
-const { getPreprints, getPreprintsGroupByLicense, getPreprintsGroupByCategory, getPreprintsGroupByYear } = require('./controller');
+const { getPreprints, getPreprintsGroupByLicense, getPreprintsGroupByCategory, getPreprintsGroupByYear, getPreprintsGroupByMonth } = require('./controller');
 
 app.use(express.json());
 app.use(cors({
@@ -17,5 +17,6 @@ app.get('/api/preprints', getPreprints);
 app.get('/api/license', getPreprintsGroupByLicense);
 app.get('/api/category', getPreprintsGroupByCategory);
 app.get('/api/year', getPreprintsGroupByYear);
+app.get('/api/month', getPreprintsGroupByMonth);
 
 app.listen(SERVER_PORT, () => console.log(`Server running on ${SERVER_PORT}`));
