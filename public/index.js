@@ -230,6 +230,7 @@ const getPreprintsYearBarChart = () => {
     axios.get('http://localhost:4000/api/month')
       .then(res => {
         const data = res.data;
+        console.log(data)
         const ctx = document.getElementById('month-bar-chart').getContext('2d');
         const backgroundColors = Object.keys(data).map((_, i) => `hsla(${i / Object.keys(data).length * 360}, 100%, 75%, 1)`);
         const borderColors = Object.keys(data).map((_, i) => `hsla(${i / Object.keys(data).length * 360}, 100%, 75%, 1)`);
