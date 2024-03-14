@@ -102,6 +102,11 @@ button:hover {
     height: 800px;
 }
 
+#month-bar-chart {
+    width: 800px;
+    height: 800px;
+}
+
 #preprints-table {
     width: 100%;
     border-collapse: collapse;
@@ -125,5 +130,5 @@ button:hover {
 }
 
 #biorxiv-logo {
-    width: 400px
+    width: 600px
 }

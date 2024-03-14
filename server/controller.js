@@ -100,16 +100,16 @@ module.exports = {
         .then(([results, metadata]) => {
             console.log(results)
 
-            const countsByYear = results.reduce((obj, row) => {
-                obj[row.year] = row.count;
+            const countsByMonth = results.reduce((obj, row) => {
+                obj[row.month] = row.count;
                 return obj;
             }, {});
 
-            res.status(200).send(countsByYear);
+            res.status(200).send(countsByMonth);
         })
         .catch(err => {
             console.log(err);
-            res.status(500).send('Error getting preprints grouped by year');
+            res.status(500).send('Error getting preprints grouped by month');
         });
     },
     createTable: (req, res) => {
