@@ -19,8 +19,8 @@ async function getPreprintsByDate() {
         const year = currentDate.getFullYear();
 
         console.log(`${date}-${month}-${year}`);
-        
-        const url = `https://raw.githubusercontent.com/sunnydigital/biorxiv-API-metadata-scraper/main/dated_data/${year}/${String(month).padStart(2,'0')}/${year}-${String(month).padStart(2,'0')}-${String(date).padStart(2,'0')}.json`;
+
+        const url = `https://raw.githubusercontent.com/sunnydigital/biorxiv-API-metadata-scraper/main/dated_data/${year}/${month}/${year}-${String(month).padStart(2,'0')}-${String(date).padStart(2,'0')}.json`;
         try {
             const response = await axios.get(url);
             const data = response.data;
@@ -32,7 +32,20 @@ async function getPreprintsByDate() {
                 }
                 const { doi, title, authors, author_corresponding, author_corresponding_institution, date, version, type, license, category, jatsxml, abstract, published, server } = row;
                 promises.push(db.insertIntoTable(
-                    doi, title, authors, author_corresponding, author_corresponding_institution, date, version, type, license, category, jatsxml, abstract, published, server
+                    doi, 
+                    title, 
+                    authors, 
+                    author_corresponding, 
+                    author_corresponding_institution, 
+                    date, 
+                    version, 
+                    type, 
+                    license, 
+                    category, 
+                    jatsxml, 
+                    abstract, 
+                    published, 
+                    server
                 ));
             }
             await Promise.all(promises);

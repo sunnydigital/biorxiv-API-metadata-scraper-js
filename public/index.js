@@ -1,4 +1,4 @@
-const title = document.getElementById('title')
+const title = document.getElementById('title');
 
 const getPreprintsBtn = document.getElementById('get-preprints-btn');
 const getPreprintsLicensePieChartBtn = document.getElementById('get-license-btn');
