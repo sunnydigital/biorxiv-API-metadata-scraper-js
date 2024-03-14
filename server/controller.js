@@ -137,46 +137,50 @@ module.exports = {
         .then(dbRes => console.log(dbRes[0]))
         .catch(err => console.log(err))
     },
-    insertIntoTable: (doi, title, authors, author_corresponding, author_corresponding_institution, date, version, type, license, category, jatsxml, abstract, published, server) => {    
-        sequelize.query(`
-            INSERT INTO preprints (
-                doi, 
-                title, 
-                authors, 
-                author_corresponding, 
-                author_corresponding_institution, 
-                date, 
-                version, 
-                type, 
-                license, 
-                category, 
-                jatsxml, 
-                abstract, 
-                published, 
-                server
-            ) 
-            VALUES (
-                '${doi}', 
-                '${title}', 
-                '${authors}', 
-                '${author_corresponding}', 
-                '${author_corresponding_institution}', 
-                '${date}', 
-                '${version}', 
-                '${type}', 
-                '${license}', 
-                '${category}', 
-                '${jatsxml}', 
-                '${abstract}', 
-                '${published}', 
-                '${server}'
-            )
-        `)
-        .then(dbRes => {
-            console.log(dbRes[0]);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+    insertIntoTable: (doi, title, authors, author_corresponding, author_corresponding_institution, date, version, type, license, category, jatsxml, abstract, published, server) => {
+        return new Promise((resolve, reject) => {
+            sequelize.query(`
+                INSERT INTO preprints (
+                    doi, 
+                    title, 
+                    authors, 
+                    author_corresponding, 
+                    author_corresponding_institution, 
+                    date, 
+                    version, 
+                    type, 
+                    license, 
+                    category, 
+                    jatsxml, 
+                    abstract, 
+                    published, 
+                    server
+                ) 
+                VALUES (
+                    '${doi}', 
+                    '${title}', 
+                    '${authors}', 
+                    '${author_corresponding}', 
+                    '${author_corresponding_institution}', 
+                    '${date}', 
+                    '${version}', 
+                    '${type}', 
+                    '${license}', 
+                    '${category}', 
+                    '${jatsxml}', 
+                    '${abstract}', 
+                    '${published}', 
+                    '${server}'
+                )
+            `)
+            .then(dbRes => {
+                console.log(dbRes[0]);
+                resolve();
+            })
+            .catch(err => {
+                console.log(err);
+                reject(err);
+            })
+        });
     }
 }
