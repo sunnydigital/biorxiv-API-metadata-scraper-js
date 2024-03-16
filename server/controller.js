@@ -62,8 +62,66 @@ module.exports = {
                 obj[row.category] = row.count;
                 return obj;
             }, {});
+            console.log(countsByCategory)
 
-            res.status(200).send(countsByCategory);
+            const normalizeAndCombine = (obj) => {
+                const misspellingsMap = {
+                  'animal behavior and cognition': 'Animal Behavior and Cognition',
+                  'animal behavior and cognition ': 'Animal Behavior and Cognition',
+                  'biochemistry ': 'Biochemistry',
+                  'bioengineering ': 'Bioengineering',
+                  'bioinformatics': 'Bioinformatics',
+                  'bioinformatics ': 'Bioinformatics',
+                  'biophysics ': 'Biophysics',
+                  'cancer biology ': 'Cancer Biology',
+                  'cell biology ': 'Cell Biology',
+                  'clinical trials ': 'Clinical Trials',
+                  'developmental biology ': 'Developmental Biology',
+                  'ecology': 'Ecology',
+                  'ecology ': 'ecology',
+                  'epidemiology ': 'epidemiology',
+                  'evolutionary biology': 'evolutionary biology',
+                  'evolutionary biology ': 'evolutionary biology',
+                  'genetics ': 'genetics',
+                  'genomics ': 'genomics',
+                  'immunology ': 'immunology',
+                  'microbiology ': 'microbiology',
+                  'molecular biology ': 'molecular biology',
+                  'neuroscience ': 'neuroscience',
+                  'paleontology ': 'paleontology',
+                  'pathology ': 'pathology',
+                  'pharmacology and toxicology ': 'pharmacology and toxicology',
+                  'physiology ': 'physiology',
+                  'plant biology ': 'plant biology',
+                  'scientific communication and education': 'scientific communication and education',
+                  'synthetic biology ': 'synthetic biology',
+                  'systems biology ': 'systems biology',
+                  'zoology ': 'zoology',
+                };
+
+                const normalizedObject = Object.entries(obj).reduce((acc, [key, value]) => {
+                    const normalizedKey = normalizeCategoryName(key, misspellingsMap);
+                    if (acc[normalizedKey]) {
+                      acc[normalizedKey] = parseInt(acc[normalizedKey]) + parseInt(value);
+                    } else {
+                      acc[normalizedKey] = value;
+                    }
+                    return acc;
+                  }, {});
+                
+                  return normalizedObject;
+                };
+
+                const normalizeCategoryName = (category, misspellingsMap) => {
+                    const normalizedCategory = category.trim().toLowerCase();
+                    return misspellingsMap[normalizedCategory] || normalizedCategory;
+                  };
+                  
+                  const normalizedCountsByCategory = normalizeAndCombine(countsByCategory);
+
+                  console.log(normalizedCountsByCategory)
+
+            res.status(200).send(normalizedCountsByCategory);
         })
         .catch(err => {
             console.log(err);
