@@ -9,7 +9,7 @@ Visualizer companion to the BioRxiv scraper to consolidate relevant metadata for
 
 - To get started with this project, clone the repository, making sure pgAdmin is installed, with a server named `preprints`. PLease then navigate to the `server` folder and open `.env`. Edit the `CONNECTION_STRING` to have the format `postgresql://postgres:{PASSWORD}@localhost:{PORT}/preprints`
 
-- Make sure `axios`, `cors`, `dotenv`, `express`, `pg`, `pg-hstore`, and `sequelize` are installed.
+- Make sure `axios`, `cors`, `dotenv`, `express`, `pg`, `pg-store`, and `sequelize` are installed.
 
 - Replace `{PASSWORD}` and `{PORT}` with your own password and port.
 
